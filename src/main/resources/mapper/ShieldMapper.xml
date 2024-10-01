@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuntwo.raindrop.mapper.ShieldMapper" >
+    <resultMap id="BaseResultMap" type="com.yuntwo.raindrop.entity.Shield" >
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="from_user_id" property="fromUserId" jdbcType="VARCHAR" />
+        <result column="to_user_id" property="toUserId" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="SecondResultMap" type="com.yuntwo.raindrop.VO.shield.ShieldedUserVO" >
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="face_image" property="faceImage" jdbcType="VARCHAR" />
+    </resultMap>
+
+<!--    <insert id="createShield">-->
+<!--    </insert>-->
+
+
+    <select id="querytoUserByFromUserId" resultType="com.yuntwo.raindrop.VO.shield.ShieldedUserVO" resultMap="SecondResultMap">
+        select u.user_id as user_id, u.username as username, u.face_image as face_image
+        from shield s
+        left join users u
+        on s.to_user_id=u.user_id
+        where from_user_id=#{fromUserId} and u.status!=2
+    </select>
+
+    <delete id="deleteShield">
+        delete from shield where from_user_id=#{fromUserId} and to_user_id=#{toUserId}
+    </delete>
+</mapper>

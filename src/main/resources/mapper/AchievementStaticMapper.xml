@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuntwo.raindrop.mapper.AchievementStaticMapper" >
+    <resultMap id="BaseResultMap" type="com.yuntwo.raindrop.entity.AchievementStatic" >
+        <id column="achievement_id" property="achievementId" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="desc" property="desc" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="TINYINT" />
+        <result column="condition" property="condition" jdbcType="TINYINT" />
+        <result column="score" property="score" jdbcType="TINYINT" />
+        <result column="level" property="level" jdbcType="TINYINT" />
+        <result column="medal" property="medal" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="queryAchievementStaticByAchievementId"
+            resultType="com.yuntwo.raindrop.entity.AchievementStatic">
+        select * from achievement_static where achievement_id=#{achievementId} and status=0
+    </select>
+
+    <select id="queryAchievementStaticType" resultType="java.lang.Integer">
+        select type from achievement_static where status=0 group by type order by type
+    </select>
+
+
+
+    <select id="queryAchievementStaticByType" resultType="com.yuntwo.raindrop.entity.AchievementStatic" resultMap="BaseResultMap">
+        select * from achievement_static where type=#{type} and status=0 order by score
+    </select>
+
+
+</mapper>

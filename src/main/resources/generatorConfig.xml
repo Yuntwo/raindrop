@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+    PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+    "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 这个配置会从这个文件中加载一些参数，不是必须的，但是如果有的话这个文件必须存在 -->
+    <properties resource="application.yml"/>
+    <!--<context id="simple" targetRuntime="MyBatis3">-->  <!--推荐-->
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.yuntwo.raindrop.mapper.MyMapper"/>
+        </plugin>
+
+        <!-- 注意这些配置的顺序是有严格要求的 -->
+
+        <!-- mysql连接的驱动配置，很重要 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/raindrop?characterEncoding=utf-8"
+                        userId="root"
+                        password="12345678">
+        </jdbcConnection>
+
+        <!-- 注意只会针对配置文件中 <table> 标签指定的表生成对应的实体类、接口类（Mapper）和对应的 XML 映射文件，也即以下三个目录 -->
+
+        <!-- 逆向生成持久化对象的实体目录 -->
+        <javaModelGenerator targetPackage="com.yuntwo.raindrop.entity" targetProject="src/main/java"/>
+
+        <!-- 逆向生成对象映射xml文件的目录 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+
+        <!-- 逆向生成对象mapper接口类的目录 -->
+        <javaClientGenerator targetPackage="com.yuntwo.raindrop.mapper" targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+
+        <!-- 要逆向生成持久化对象对应的的数据库中的表格名，如果要自定义就不要逆向生成它们，否则会覆盖自定义 -->
+        <!--        <table tableName="comments">-->
+        <!--        </table>-->
+        <!--        <table tableName="users">-->
+        <!--        </table>-->
+        <!--        <table tableName="videos">-->
+        <!--        </table>-->
+        <!--                <table tableName="following_follower">-->
+        <!--                </table>-->
+        <!--        <table tableName="report">-->
+        <!--        </table>-->
+        <!--        <table tableName="search">-->
+        <!--        </table>-->
+        <!--        <table tableName="user_like_comment">-->
+        <!--        </table>-->
+        <!--        <table tableName="user_like_video">-->
+        <!--        </table>-->
+        <!--        <table tableName="user_register">-->
+        <!--        </table>-->
+        <table tableName="user_like_academic_video">
+        </table>
+
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuntwo.raindrop.mapper.VideoAndUserLikeVideoMapper" >
+    <resultMap id="BaseResultMap" type="com.yuntwo.raindrop.VO.VideoWithUserVO" >
+
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="video_id" property="videoId" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="video_cover_path" property="videoCoverPath" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="video_desc" property="videoDesc" jdbcType="VARCHAR"/>
+        <result column="video_path" property="videoPath" jdbcType="VARCHAR"/>
+        <result column="like_num" property="likeNum" jdbcType="BIGINT"/>
+        <result column="comment_num" property="commentNum" jdbcType="BIGINT"/>
+        <result column="forward_num" property="forwardNum" jdbcType="BIGINT"/>
+        <result column="play_num" property="playNum" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="is_public" property="isPublic" jdbcType="TINYINT"/>
+        <result column="tag" property="tag" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="face_image" property="faceImage" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+<!--    <select id="queryUserLikeVideoInfoByUserId" parameterType="String" resultMap="BaseResultMap"  resultType="com.yuntwo.raindrop.VO.VideoWithUserVO">-->
+<!--        select v.*,u.username as username,u.face_image as face_image-->
+<!--        from user_like_video ulv, videos v, users u-->
+<!--        where ulv.user_id = #{userId} and ulv.video_id = v.video_id and v.user_id = u.user_id and v.status = 1 and v.is_public = 1-->
+<!--   </select>-->
+
+</mapper>

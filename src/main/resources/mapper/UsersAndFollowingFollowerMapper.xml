@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuntwo.raindrop.mapper.UsersAndFollowingFollowerMapper" >
+    <resultMap id="BaseResultMap" type="com.yuntwo.raindrop.VO.FollowingFollowerVO" >
+        <id column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="face_image" property="faceImage" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="queryFollowerInfoByUserId" parameterType="String" resultMap="BaseResultMap">
+        select u.username as username, u.face_image as face_image, u.user_id as user_id, u.description as description
+        from following_follower f
+        inner join users u
+        on  f.follower_id = u.user_id
+        where f.following_id = #{userId} and u.status != 2
+        order by f.create_time desc
+   </select>
+
+    <select id="queryFollowingInfoByUserId" parameterType="String" resultMap="BaseResultMap">
+        select u.username as username, u.face_image as face_image, u.user_id as user_id, u.description as description
+        from following_follower f
+        inner join users u
+        on  f.following_id = u.user_id
+        where f.follower_id = #{userId} and u.status != 2
+        order by f.create_time desc
+   </select>
+
+</mapper>

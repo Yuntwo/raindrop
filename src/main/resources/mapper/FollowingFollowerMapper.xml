@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuntwo.raindrop.mapper.FollowingFollowerMapper" >
+    <resultMap id="BaseResultMap" type="com.yuntwo.raindrop.entity.FollowingFollower" >
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="following_id" property="followingId" jdbcType="VARCHAR" />
+        <result column="follower_id" property="followerId" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <delete id="deleteFollowRelationship">
+        delete
+        from following_follower
+        where following_id = #{followingId} and follower_id = #{followerId}
+    </delete>
+
+    <select id="queryFollowByFollowerIdAndFollowingId"  resultType="com.yuntwo.raindrop.entity.FollowingFollower" resultMap="BaseResultMap">
+        select *
+        from following_follower
+        where follower_id = #{followerId} and following_id = #{followingId}
+    </select>
+
+</mapper>

@@ -1,0 +1,9 @@
+stages:
+    - build
+    - deploy
+deploy:
+    stage: deploy
+    script:
+        - /home/gitlab-runner/gitlab_deploy irdc/shortvideo shortvideo
+    only:
+        - master

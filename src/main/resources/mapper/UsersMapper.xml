@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuntwo.raindrop.mapper.UsersMapper" >
+  <resultMap id="BaseResultMap" type="com.yuntwo.raindrop.entity.Users" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="lab_id" property="labId" jdbcType="VARCHAR"/>
+    <result column="upload_academic_video" property="uploadAcademicVideo" jdbcType="INTEGER"/>
+    <result column="auth_level" property="authLevel" jdbcType="INTEGER"/>
+    <result column="face_image" property="faceImage" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="TINYINT" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="fans_num" property="fansNum" jdbcType="INTEGER" />
+    <result column="follow_num" property="followNum" jdbcType="INTEGER" />
+    <result column="like_num" property="likeNum" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="upload_authority" property="uploadAuthority" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="queryPhoneIsExist" parameterType="String" resultMap="BaseResultMap">
+        select * from users where phone=#{phone}
+   </select>
+
+  <select id="queryUsernameIsExist" parameterType="String" resultMap="BaseResultMap">
+    select * from users where username=#{username}
+  </select>
+
+  <insert id="createUser" parameterType="com.yuntwo.raindrop.entity.Users" useGeneratedKeys="true" keyProperty="user_id">
+    insert into users(
+        <if test="userId != null and userId != ''">user_id,</if>
+        <if test="phone != null and phone != ''">phone,</if>
+        <if test="password != null and password != ''">password,</if>
+        <if test="username != null and username != ''">username,</if>
+        <if test="salt != null and salt != ''">salt,</if>
+        <if test="faceImage != null and faceImage != ''">face_image,</if>
+        <if test="sex != null">sex,</if>
+        <if test="age != null">age,</if>
+        create_time
+    )values (
+      <if test="userId != null and userId != ''">#{userId},</if>
+      <if test="phone != null and phone != ''">#{phone},</if>
+      <if test="password != null and password != ''">#{password},</if>
+      <if test="username != null and username != ''">#{username},</if>
+      <if test="salt != null and salt != ''">#{salt},</if>
+      <if test="faceImage != null and faceImage != ''">#{faceImage},</if>
+      <if test="sex != null">#{sex},</if>
+      <if test="age != null">#{age},</if>
+      sysdate()
+    )
+  </insert>
+
+
+  <update id="updateUserInfo" parameterType="com.yuntwo.raindrop.entity.Users" keyProperty="user_id">
+    update users
+    <set>
+      <if test="username != null and username != ''">username = #{username},</if>
+      <if test="phone != null and phone != ''">phone = #{phone},</if>
+      <if test="password != null and password != ''">password = #{password},</if>
+      <if test="salt != null and salt != ''">salt = #{salt},</if>
+      <if test="faceImage != null and faceImage != ''">face_image = #{faceImage},</if>
+      <if test="sex != null">sex = #{sex},</if>
+      <if test="age != null">age = #{age},</if>
+      <if test="fansNum != null and fansNum != 0">fans_num = #{fansNum},</if>
+      <if test="followNum != null and followNum != 0">follow_num = #{followNum},</if>
+      <if test="likeNum != null and likeNum != 0">like_num = #{likeNum},</if>
+      <if test="description != null and description != ''">description = #{description},</if>
+      <if test="email != null and email != ''">email = #{email},</if>
+      <if test="status != null">status = #{status},</if>
+      update_time = sysdate()
+    </set>
+    where user_id = #{userId}
+  </update>
+
+    <select id="queryUserByUserId" parameterType="String" resultMap="BaseResultMap">
+        select * from users where user_id=#{userId} and status = 0
+    </select>
+
+    <select id="queryLikeNumByUserId" resultType="java.lang.Integer">
+      select like_num from users where user_id=#{userId}
+    </select>
+
+  <select id="queryStatus" resultType="java.lang.Integer">
+    select status from users where user_id=#{userId}
+  </select>
+
+  <select id="queryUploadAuthority" resultType="java.lang.Integer">
+    select upload_authority from users where user_id=#{userId}
+  </select>
+
+  <update id="addFansNum" parameterType="String" >
+  	update users set fans_num=fans_num+1 where user_id=#{userId}
+  </update>
+
+  <update id="addFollowNum" parameterType="String">
+  	update users set follow_num=follow_num+1 where user_id=#{userId}
+  </update>
+
+  <update id="addLikeNum" parameterType="String">
+  	update users set like_num=like_num+1 where user_id=#{userId}
+  </update>
+
+  <update id="reduceFansNum" parameterType="String">
+  	update users set fans_num=fans_num-1 where user_id=#{userId}
+  </update>
+
+  <update id="reduceFollowNum" parameterType="String">
+  	update users set follow_num=follow_num-1 where user_id=#{userId}
+  </update>
+
+  <update id="reduceLikeNum" parameterType="String">
+  	update users set like_num=like_num-1 where user_id=#{userId}
+  </update>
+
+    <update id="setLikeNumByUserId">
+      update users set like_num=#{likeNum} where user_id=#{userId}
+    </update>
+
+</mapper>
